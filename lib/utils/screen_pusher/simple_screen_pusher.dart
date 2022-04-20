@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ScreenPusher {
+import '../screen_pusher/base_screen_pusher.dart';
 
-  static void pushScreen(BuildContext context, Widget route, bool shouldPop) {
+class SimpleScreenPusher implements ScreenPusher {
+
+  @override
+  void push(context, route, shouldPop) {
     if (shouldPop) {
       Navigator.of(context).pushAndRemoveUntil(
           PageRouteBuilder(
@@ -10,7 +13,7 @@ class ScreenPusher {
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
           ),
-              (route) => false);
+          (route) => false);
     } else {
       Navigator.push(
         context,
@@ -22,5 +25,4 @@ class ScreenPusher {
       );
     }
   }
-
 }

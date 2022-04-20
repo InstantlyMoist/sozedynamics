@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ModalShower {
-  static Future<void> showModalSheet(BuildContext context, Widget sheet) async {
+
+  Future<void> showModalSheet(BuildContext context, Widget sheet) async {
     await showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,

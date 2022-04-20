@@ -42,7 +42,7 @@ class _ConnectionSheetState extends State<ConnectionSheet> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => ConnectionHandler.connect(context, true, widget.result.device.address),
+                    onPressed: () => ConnectionHandler().connect(context, true, widget.result.device.address),
                     child: Text(
                       "Verbinden",
                       style: TextStyle(color: Colors.grey.shade800),

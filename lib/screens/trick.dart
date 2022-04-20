@@ -5,7 +5,9 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:sozedynamics/screens/scan.dart';
 import 'package:sozedynamics/widgets/drawers/control_drawer.dart';
 
-import '../utils/screen_pusher.dart';
+import '../utils/screen_pusher/simple_screen_pusher.dart';
+
+
 
 class TrickScreen extends StatefulWidget {
   BluetoothConnection connection;
@@ -25,7 +27,7 @@ class _TrickScreenState extends State<TrickScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        ScreenPusher.pushScreen(context, const ScanScreen(), false);
+        SimpleScreenPusher().push(context, const ScanScreen(), false);
         return false;
       },
       child: Scaffold(

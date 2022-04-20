@@ -6,9 +6,9 @@ import 'package:sozedynamics/main.dart';
 import 'package:sozedynamics/screens/battle.dart';
 import 'package:sozedynamics/screens/control.dart';
 import 'package:sozedynamics/screens/trick.dart';
-import 'package:sozedynamics/utils/screen_pusher.dart';
 
 import '../../screens/settings.dart';
+import '../../utils/screen_pusher/simple_screen_pusher.dart';
 
 class ControlDrawer extends StatefulWidget {
   BluetoothConnection connection;
@@ -34,7 +34,7 @@ class _ControlDrawerState extends State<ControlDrawer> {
     }
     switch (to) {
       case 0:
-        ScreenPusher.pushScreen(
+        SimpleScreenPusher().push(
             navigatorKey.currentContext!,
             ControlScreen(
               connection: widget.connection,
@@ -43,7 +43,7 @@ class _ControlDrawerState extends State<ControlDrawer> {
             true);
         break;
       case 1:
-        ScreenPusher.pushScreen(
+        SimpleScreenPusher().push(
             navigatorKey.currentContext!,
             BattleScreen(
               connection: widget.connection,
@@ -52,7 +52,7 @@ class _ControlDrawerState extends State<ControlDrawer> {
             true);
         break;
       case 2:
-        ScreenPusher.pushScreen(
+        SimpleScreenPusher().push(
             navigatorKey.currentContext!,
             TrickScreen(
               connection: widget.connection,
@@ -61,7 +61,7 @@ class _ControlDrawerState extends State<ControlDrawer> {
             true);
         break;
       case 3:
-        ScreenPusher.pushScreen(
+        SimpleScreenPusher().push(
             navigatorKey.currentContext!,
             SettingScreen(
               connection: widget.connection,

@@ -12,7 +12,7 @@ import 'package:sozedynamics/screens/scan.dart';
 import 'package:sozedynamics/utils/bluetooth_handler.dart';
 import 'package:sozedynamics/widgets/control_button.dart';
 
-import '../utils/screen_pusher.dart';
+import '../utils/screen_pusher/simple_screen_pusher.dart';
 import '../widgets/drawers/control_drawer.dart';
 
 class ControlScreen extends StatefulWidget {
@@ -32,6 +32,8 @@ class _ControlScreenState extends State<ControlScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   late OpenPainter painter;
+
+  late BluetoothHandler _bluetoothHandler;
 
   List<int> _buffer = [];
 
@@ -71,6 +73,9 @@ class _ControlScreenState extends State<ControlScreen> {
   @override
   void initState() {
     super.initState();
+
+    _bluetoothHandler = BluetoothHandler(widget.connection);
+
     painter = OpenPainter(repaint: counter, context: context);
 
     print("hoi");
@@ -83,7 +88,7 @@ class _ControlScreenState extends State<ControlScreen> {
     }
 
     widget.subscription!.onDone(
-      () => ScreenPusher.pushScreen(context, const ScanScreen(), true),
+      () => SimpleScreenPusher().push(context, const ScanScreen(), true),
     );
     // FIX ON DISCONNECT
   }
@@ -101,7 +106,7 @@ class _ControlScreenState extends State<ControlScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        ScreenPusher.pushScreen(context, const ScanScreen(), false);
+        SimpleScreenPusher().push(context, const ScanScreen(), false);
         return false;
       },
       child: SafeArea(
@@ -142,81 +147,81 @@ class _ControlScreenState extends State<ControlScreen> {
                     children: [
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:tlf", widget.connection),
+                            _bluetoothHandler.send("s:m:tlf"),
                         // Left turn forward
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:tlf", widget.connection),
+                            _bluetoothHandler.send("e:m:tlf"),
                         // Left turn forward
                         icon: Icons.clear,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:f", widget.connection),
+                            _bluetoothHandler.send("s:m:f"),
                         // Forward
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:f", widget.connection),
+                            _bluetoothHandler.send("e:m:f"),
                         icon: Icons.arrow_drop_up,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:trf", widget.connection),
+                            _bluetoothHandler.send("s:m:trf"),
                         // Turn right forward
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:trf", widget.connection),
+                            _bluetoothHandler.send("e:m:trf"),
                         // Turn right forward
                         icon: Icons.clear,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:l", widget.connection),
+                            _bluetoothHandler.send("s:m:l"),
                         // Left
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:l", widget.connection),
+                            _bluetoothHandler.send("e:m:l"),
                         // Left
                         icon: Icons.arrow_left,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:s", widget.connection),
+                            _bluetoothHandler.send("s:m:s"),
                         // Stop
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:s", widget.connection),
+                            _bluetoothHandler.send("e:m:s"),
                         // Stop
                         icon: Icons.car_rental,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:r", widget.connection),
+                            _bluetoothHandler.send("s:m:r"),
                         // Right
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:r", widget.connection),
+                            _bluetoothHandler.send("e:m:r"),
                         // Right
                         icon: Icons.arrow_right,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:tlb", widget.connection),
+                            _bluetoothHandler.send("s:m:tlb"),
                         // Turn left backward
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:tlb", widget.connection),
+                            _bluetoothHandler.send("e:m:tlb"),
                         // Turn left backward
                         icon: Icons.clear,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:b", widget.connection),
+                            _bluetoothHandler.send("s:m:b"),
                         // Backward
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:b", widget.connection),
+                            _bluetoothHandler.send("e:m:b"),
                         // Backward
                         icon: Icons.arrow_drop_down,
                       ),
                       ControlButton(
                         onTapStart: () =>
-                            BluetoothHandler.send("s:m:trb", widget.connection),
+                            _bluetoothHandler.send("s:m:trb"),
                         // Turn right backward
                         onTapEnd: () =>
-                            BluetoothHandler.send("e:m:trb", widget.connection),
+                            _bluetoothHandler.send("e:m:trb"),
                         // Turn right backward
                         icon: Icons.two_wheeler,
                       ),
@@ -226,27 +231,6 @@ class _ControlScreenState extends State<ControlScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    widget.connection.output.add(ascii.encode("Hallo"));
-                  },
-                  child: Text("stuur data"),
-                ),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       setState(() {
-                //         autoDrive = !autoDrive;
-                //       });
-                //       BluetoothHandler.send(
-                //           !autoDrive ? "s:m:a" : "e:m:a", widget.connection);
-                //     },
-                //     child: Text(
-                //       autoDrive ? "Automatisch rijden" : "Stoppen",
-                //       style: const TextStyle(color: Colors.black),
-                //     ),
-                //     style: ButtonStyle(
-                //         backgroundColor: MaterialStateProperty.all<Color>(
-                //             Colors.yellowAccent))),
                 const Spacer(),
                 const SizedBox(
                   height: 16.0,

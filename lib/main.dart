@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sozedynamics/screens/scan.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+
+
+
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,

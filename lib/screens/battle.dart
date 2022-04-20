@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:sozedynamics/screens/scan.dart';
+import 'package:sozedynamics/utils/screen_pusher/simple_screen_pusher.dart';
 import 'package:sozedynamics/widgets/drawers/control_drawer.dart';
-
-import '../utils/screen_pusher.dart';
 
 class BattleScreen extends StatefulWidget {
   BluetoothConnection connection;
@@ -25,7 +24,7 @@ class _BattleScreenState extends State<BattleScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        ScreenPusher.pushScreen(context, const ScanScreen(), false);
+        SimpleScreenPusher().push(context, const ScanScreen(), false);
         return false;
       },
       child: Scaffold(

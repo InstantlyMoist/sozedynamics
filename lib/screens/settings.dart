@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:sozedynamics/screens/scan.dart';
 import 'package:sozedynamics/utils/bluetooth_handler.dart';
-import 'package:sozedynamics/utils/screen_pusher.dart';
 import 'package:sozedynamics/utils/settings.dart';
 import 'package:sozedynamics/widgets/image_settings_toggle.dart';
 import 'package:sozedynamics/widgets/settings_toggle.dart';
 
+import '../utils/screen_pusher/simple_screen_pusher.dart';
 import '../widgets/drawers/control_drawer.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        ScreenPusher.pushScreen(context, const ScanScreen(), false);
+        SimpleScreenPusher().push(context, const ScanScreen(), false);
         return false;
       },
       child: Scaffold(
@@ -80,8 +80,8 @@ class _SettingScreenState extends State<SettingScreen> {
                           _value = value.toInt();
                         });
                         Settings.currentMotorSpeed = _value.toInt();
-                        BluetoothHandler.updateMotorSpeed(
-                            value, widget.connection);
+                        BluetoothHandler(widget.connection)
+                            .updateMotorSpeed(value);
                       },
                       max: 255,
                       value: _value.toDouble(),

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:sozedynamics/screens/control.dart';
 import 'package:sozedynamics/utils/connection_handler.dart';
-import 'package:sozedynamics/utils/screen_pusher.dart';
-import 'package:sozedynamics/widgets/dialogs/connection_dialog.dart';
 
 class ResultTile extends StatefulWidget {
   BluetoothDiscoveryResult result;
@@ -23,7 +20,7 @@ class _ResultTileState extends State<ResultTile> {
         vertical: 12.0,
       ),
       child: GestureDetector(
-        onTap: () => ConnectionHandler.connect(
+        onTap: () => ConnectionHandler().connect(
             context, false, widget.result.device.address),
         child: Container(
           width: double.infinity,
